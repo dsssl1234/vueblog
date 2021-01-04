@@ -52,11 +52,13 @@ public class UserController {
         User user2 = userService.getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
         Assert.notNull(user2, "账号不存在");
         //判断密码是否正确
-        if (user == null || !user.getPassword().equals(SecureUtil.md5(user.getPassword()))) {
+        if (user2 == null || !user2.getPassword().equals(SecureUtil.md5(user.getPassword()))) {
             return Result.fail("密码错误");
         }
-
-        return null;
+        String jwt = jwtUtils.generateToken(user2.getId());
+        response.setHeader("Authorization", jwt);
+        response.setHeader("Access-control-Expose-Headers", "Authorization");
+        return Result.success(user2);
     }
 
 }

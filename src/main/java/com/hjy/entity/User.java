@@ -47,8 +47,8 @@ public class User implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
 
-    @NotBlank(message = "邮箱地址不能为空")
-    @Email(message = "邮箱格式不正确")
+//    @NotBlank(message = "邮箱地址不能为空")
+//    @Email(message = "邮箱格式不正确")
     @ApiModelProperty(value = "邮箱")
     private String email;
 
