@@ -1,15 +1,15 @@
 package com.hjy.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.Version;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * <p>
@@ -32,15 +32,23 @@ public class Blog implements Serializable {
 
     private Long userId;
 
+    @NotBlank(message = "标题不能为空")
     private String title;
 
     private String description;
 
     private String content;
 
-    private Date created;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
     private Integer status;
+
+    @TableLogic
+    private Integer dr;
 
 
 }
