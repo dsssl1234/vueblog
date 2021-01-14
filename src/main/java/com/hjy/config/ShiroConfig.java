@@ -9,6 +9,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -106,6 +107,15 @@ public class ShiroConfig  {
 
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
+    }
+
+    @Bean
+    public RedisManager redisManager(){
+        //RedisManager为Redis信息，默认host=localhost，port=6379
+        //https://blog.csdn.net/weixin_42385395/article/details/109202743
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("121.196.148.78:6379");
+        return redisManager;
     }
 }
 

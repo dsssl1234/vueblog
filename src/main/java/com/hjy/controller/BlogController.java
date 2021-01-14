@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hjy.common.lang.Result;
 import com.hjy.entity.Blog;
+import com.hjy.entity.User;
 import com.hjy.service.BlogService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -46,17 +47,17 @@ public class BlogController {
         return Result.success(blog);
     }
 
-//    @RequiresAuthentication
+    @RequiresAuthentication
     @PostMapping("/edit")
     public Result edit(@Validated @RequestBody Blog blog){
         Blog temp = null;
-        Blog principal = (Blog) SecurityUtils.getSubject().getPrincipal();
+        User principal = (User) SecurityUtils.getSubject().getPrincipal();
         if(null!=blog.getId()){
             temp = blogService.getById(blog.getId());
             // 只能编辑自己的文章
             Assert.isTrue(temp.getUserId().longValue()==principal.getId().longValue(),"无编辑权限");
         }else {
-            blog.setUserId(1L);
+            blog.setUserId(principal.getId());
             blog.setStatus(0);
         }
         blogService.save(blog);
